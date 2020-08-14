@@ -24,13 +24,9 @@ exports.search = async function(searchText) {
         const links = []
         items.forEach(item => {
             links.push(item.link);
-            // console.log('title:- ', item.title);
-            // console.log('link:- ', item.link);
         })
         return links;
-        //initiate smart caching, calling after sending response
-        //fetchOtherLanguages(req.user._id, source, lang);
     } catch(err) {
-        console.log('error:- ', err);
+        console.error(err);
     }
 };

@@ -1,7 +1,11 @@
 const {SearchModel} = require('../models/search');
 
 exports.create = async function(searchText) {
-    await SearchModel.create({searchText:searchText});
+    try {
+        await SearchModel.create({searchText:searchText});
+    } catch(err) {
+        console.error(err);
+    }
 }
 
 exports.searchHistory = async function(searchText) {
@@ -11,7 +15,12 @@ exports.searchHistory = async function(searchText) {
             $options:'i'
         }
     }
-    const histories = await SearchModel.find(searchQuery,{'searchText':1, '_id':0}).sort({'createdAt':-1}).limit(5);
-    const searchTexts = histories.map(history => history.searchText);
-    return searchTexts;
+    try {
+        const histories = await SearchModel.find(searchQuery,{'searchText':1, '_id':0}).sort({'createdAt':-1}).limit(5);
+        const searchTexts = histories.map(history => history.searchText);
+        return searchTexts;
+    } catch(err) {
+        console.error(err);
+    }
+
 }
